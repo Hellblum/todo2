@@ -20,14 +20,21 @@ class TaskManager {
 
 	addTask(task) {
 		this.tasks.push(task);
+		this.logTasks();
 	}
 
 	removeTask(index) {
 		this.tasks.splice(index, 1);
+		this.logTasks();
 	}
 
 	toggleTaskCompletion(index) {
 	this.tasks[index].toggleCompleted();
+	this.logTasks();
+	}
+
+	logTasks() {
+		console.table(this.tasks); // Зручно виводить дані у вигляді таблиці
 	}
 };
 
@@ -46,9 +53,13 @@ class TaskRender {
 			const checkbox = document.createElement('input');
 			checkbox.classList.add('li-checkbox');
 			checkbox.type = 'checkbox';
+			checkbox.checked = task.completed;
+			const liText = li.querySelector('.li-text');
+			if(task.completed) {
+				liText.style.textDecoration = 'line-through';
+			};
 			checkbox.addEventListener('change', () => {
 				this.taskManager.toggleTaskCompletion(index);
-				const liText = li.querySelector('.li-text');
 				if (checkbox.checked) {
 					liText.style.textDecoration = 'line-through';
 				} else {
@@ -63,6 +74,7 @@ class TaskRender {
 				this.taskManager.removeTask(index);
 				this.renderList();
 			});
+			
 			//apendind
 			li.append(checkbox, removeBtn);
 			taskList.appendChild(li);
@@ -77,15 +89,16 @@ class App {
 	}
 	init () {
 		btn.addEventListener('click', () => {
-			const task = new Task(input.value);
-				this.taskManager.addTask(task);
-				this.taskRender.renderList();
-				input.value = '';
-				console.log(task)
+			if (input.value.trim() !== "") {
+				const task = new Task(input.value);
+					this.taskManager.addTask(task);
+					this.taskRender.renderList();
+					input.value = '';
+			} else{
+				alert ('Please enter a task!')
+			}
 		});
 	}
-}
-const app = new App(); 
-app.init()
-
-
+};
+const app = new App();
+app.init();
