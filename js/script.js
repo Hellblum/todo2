@@ -1,6 +1,9 @@
 const input = document.querySelector('.input');
-const btn = document.querySelector('.input-btn');
+const inputBtn = document.querySelector('.input-btn');
 const taskList = document.querySelector('.list');
+const allTab = document.querySelector('.tab-all');
+const currentTab = document.querySelector('.tab-current');
+const completedTab = document.querySelector('.tab-completed');
 
 class Task {
 	constructor(text) {
@@ -16,6 +19,7 @@ class Task {
 class TaskManager {
 	constructor() {
 		this.tasks = [];
+		this.filter = 'all';
 	}
 
 	addTask(task) {
@@ -33,8 +37,21 @@ class TaskManager {
 	this.logTasks();
 	}
 
+	setFilter(filter) {
+		this.filter = filter;
+	}
+
+	getFilteredTasks() {
+		if (this.filter === 'completed') {
+			return this.tasks.filter(task => task.completed);
+		} else if (this.filter === 'pending') {
+			return this.tasks.filter(task => !task.completed);
+		}
+		return this.tasks; 
+	};
+
 	logTasks() {
-		console.table(this.tasks); // Зручно виводить дані у вигляді таблиці
+		console.table(this.tasks);
 	}
 };
 
@@ -42,14 +59,21 @@ class TaskRender {
 	constructor (taskManager, taskList) {
 		this.taskManager = taskManager;
 		this.taskList = taskList;
+		
 	}
+
+	handleFilter(filter) {
+		this.taskManager.setFilter(filter);
+		this.renderList();
+	};	
+
 	renderList() {
 		this.taskList.innerHTML = '';
-		this.taskManager.tasks.map( (task, index) => {
+		const filtredTasks = this.taskManager.getFilteredTasks();
+		filtredTasks.map( (task, index) => {
 			const li = document.createElement('li');
 			li.classList.add('list-li');
 			li.innerHTML = `<span class='li-text'>${index + 1}. ${task.text}</span>`;
-			//checkbox
 			const checkbox = document.createElement('input');
 			checkbox.classList.add('li-checkbox');
 			checkbox.type = 'checkbox';
@@ -66,7 +90,6 @@ class TaskRender {
 					liText.style.textDecoration = 'none';
 				};
 			});
-			//remove btn
 			const removeBtn = document.createElement('button');
 			removeBtn.classList.add('li-remove-btn');
 			removeBtn.innerHTML = 'Remove';
@@ -74,8 +97,6 @@ class TaskRender {
 				this.taskManager.removeTask(index);
 				this.renderList();
 			});
-			
-			//apendind
 			li.append(checkbox, removeBtn);
 			taskList.appendChild(li);
 		});
@@ -88,7 +109,7 @@ class App {
 		this.taskRender = new TaskRender(this.taskManager, taskList);
 	}
 	init () {
-		btn.addEventListener('click', () => {
+		inputBtn.addEventListener('click', () => {
 			if (input.value.trim() !== "") {
 				const task = new Task(input.value);
 					this.taskManager.addTask(task);
@@ -98,7 +119,23 @@ class App {
 				alert ('Please enter a task!')
 			}
 		});
+
+		allTab.addEventListener('click', () => {
+			this.taskManager.setFilter('all');
+			this.taskRender.renderList();
+		});
+
+		currentTab.addEventListener('click', () => {
+			this.taskManager.setFilter('pending');
+			this.taskRender.renderList();
+		});
+
+		completedTab.addEventListener('click', () => {
+			this.taskManager.setFilter('completed');
+			this.taskRender.renderList();
+		});
 	}
 };
 const app = new App();
 app.init();
+
