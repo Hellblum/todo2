@@ -119,21 +119,9 @@ class App {
 				alert ('Please enter a task!')
 			}
 		});
-
-		allTab.addEventListener('click', () => {
-			this.taskManager.setFilter('all');
-			this.taskRender.renderList();
-		});
-
-		currentTab.addEventListener('click', () => {
-			this.taskManager.setFilter('pending');
-			this.taskRender.renderList();
-		});
-
-		completedTab.addEventListener('click', () => {
-			this.taskManager.setFilter('completed');
-			this.taskRender.renderList();
-		});
+		allTab.addEventListener('click', () => this.taskRender.handleFilter('all'));
+		currentTab.addEventListener('click', () => this.taskRender.handleFilter('pending'));
+		completedTab.addEventListener('click', () => this.taskRender.handleFilter('completed'));
 	}
 };
 const app = new App();
