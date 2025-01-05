@@ -20,4 +20,14 @@ class ApiManager {
 		});
 		return await res.json();
 	}
+	async patchNewTask(id, updateCompleted) {
+		const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+			method: 'PATCH',
+			body: JSON.stringify({completed: updateCompleted}),
+			headers: {
+				'Content-type': 'application/json',
+			},
+		});
+		return await res.json();
+	}
 };

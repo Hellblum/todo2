@@ -26,17 +26,7 @@ class App {
 				alert ('Please enter a task!')
 			}
 		})
-		// const eventFilters = new EventFilters(chosenElements, taskRender);
 		this.eventFilters.filterTab();
-		// this.chosenElements.allTab.addEventListener('click', () => 
-		// 	this.taskRender.handleFilter('all')
-		// );
-		// this.chosenElements.currentTab.addEventListener('click', () =>
-		// 	this.taskRender.handleFilter('pending')
-		// );
-		// this.chosenElements.completedTab.addEventListener('click', () => 
-		// 	this.taskRender.handleFilter('completed')
-		// );
 	}
 };
 const app = new App();

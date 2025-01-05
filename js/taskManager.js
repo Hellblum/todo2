@@ -38,13 +38,17 @@ class TaskManager {
 			console.error("Помилка видалення тудухи:", error);
 		}
 	}
-	
-	toggleTaskCompletion(id) {
-		const task = this.tasks.find(task => task.id === id);
-		if (task) {
-			task.completed = !task.completed;
+	async toggleTaskCompletion(id) {
+		try{
+			const task = this.tasks.find(task => task.id === id);
+			if(task) {
+				const updateTask = await this.apiManager.patchNewTask(id, task.completed);
+				task.completed = !updateTask.completed;
+			}
+			this.logTasks();
+		} catch (error) {
+			console.error("Помилка перемикача тудухи:", error);
 		}
-		this.logTasks();
 	}
 	setFilter(filter) {
 		this.filter = filter;

@@ -6,10 +6,10 @@ class TaskRender {
 	renderList() {
 		this.chosenElements.taskList.innerHTML = '';
 		const filtredTasks = this.taskManager.getFilteredTasks();
-		filtredTasks.map(task => {
+		filtredTasks.map((task, index) => {
 			const li = document.createElement('li');
 			li.classList.add('list-li');
-			li.innerHTML = `<span class='li-text'>${task.id}. ${task.title}</span>`;
+			li.innerHTML = `<span class='li-text'>${index+1}. ${task.title}</span>`;
 
 			const checkbox = document.createElement('input');
 			checkbox.classList.add('li-checkbox');
