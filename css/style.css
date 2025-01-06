@@ -8,21 +8,21 @@ body, html {
 	width: 100%;
 	height: 100%;
 	text-align: center;
-	background-image: url('../img/image2.jpg');
+	background-color: #f0f0f0; /* Світло-сірий фон */
 	background-size: cover;
 	background-position: center;
 }
 
 .wrapper {
 	padding-bottom: 2%;
-   background: rgba(255, 255, 255, 0.05);
-   backdrop-filter: blur(2px);
+	background: rgba(255, 255, 255, 0.1); /* Прозорий фон */
+	backdrop-filter: blur(5px); /* М'якший blur */
 }
 
 .title {
 	padding-top: 5svh;
-	color: #e8e8e8;
-	text-shadow: 6px 6px 12px #000000, -6px -6px 12px #556b68;
+	color: #5e5e5e; /* Темно-сірий текст */
+	text-shadow: 1px 1px 2px #ffffff, -1px -1px 2px rgba(0, 0, 0, 0.2); /* Легкі тіні */
 }
 
 [class*="-btn"] {
@@ -31,17 +31,17 @@ body, html {
 	cursor: pointer;
 	font-size: 18px;
 	border: none;
-	color: #090909c2;
+	color: #333;
 	border-radius: 0.1em;
-	background: #e8e8e8;
-	border: 1px solid #1f1d1d;
-	box-shadow: 6px 6px 12px #000000, -6px -6px 12px #556b68;
+	background: #e0e0e0; /* Легкий сірий фон */
+	border: 1px solid #ccc; /* Світло-сірий бордер */
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); /* Легші тіні */
 	transition: transform 0.2s, background-color 0.3s;
 }
 
 [class*="-btn"]:hover {
-	background-color: #090909c2;
-	color:#e8e8e8;
+	background-color: #d0d0d0; /* М'якший колір при наведенні */
+	color: #000;
 	transform: scale(1.05);
 }
 
@@ -58,14 +58,14 @@ body, html {
 .input {
 	width: 60svh;
 	margin-right: 1svh;
-	color: #090909;
+	color: #333;
 	padding: 0.7em 1.7em;
 	font-size: 18px;
 	border-radius: 0.1em;
-	background: #e8e8e8;
-	border: 1px solid #000000;
+	background: #e0e0e0;
+	border: 1px solid #ccc;
 	transition: all 0.3s;
-	box-shadow: 6px 6px 12px #000000, -6px -6px 12px #556b68;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .input-btn {
@@ -99,14 +99,14 @@ body, html {
 	width: 3svh;
 	cursor: pointer;
 	appearance: none;
-	background-color: #e8e8e8;
+	background-color: #e0e0e0;
 	transition: all 0.3s;
 	position: relative;
-	box-shadow: 6px 6px 12px #000000, -6px -6px 12px #556b68;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .li-checkbox:checked {
-	background-color: #090909c2;
+	background-color: #4a90e2; /* М'який синій */
 }
 
 .li-checkbox:checked::after {
@@ -116,7 +116,7 @@ body, html {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	color: #e8e8e8;
+	color: #fff;
 	font-size: 2.5svh;
 	text-align: center;
 	line-height: 3svh;
@@ -125,8 +125,8 @@ body, html {
 .li-text {
 	order: 2;
 	font-size: 25px;
-	color: #e8e8e8;
-	text-shadow: 6px 6px 12px #000000, -6px -6px 12px #556b68;
+	color: #333;
+	text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .li-remove-btn {
@@ -134,12 +134,12 @@ body, html {
 	width: auto;
 	height: 30px;
 	font-size: 14px;
-	background: #090909c2;
-	color: #e8e8e8;
+	background: #e0e0e0;
+	color: #333;	
 	transition: all 0.4s;
 }
 .li-remove-btn:hover{
-	background-color: rgb(83, 17, 17);
+	background-color: #d1d1d1; /* Легкий сірий при наведенні */
 }
 
 .tabs-buttons {

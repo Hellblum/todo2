@@ -13,11 +13,9 @@ class App {
 		this.chosenElements.inputBtn.addEventListener('click', async () => {
 			if (this.chosenElements.input.value.trim() !== "") {
 				const task = new Task ({
-					id: Math.random(),
 					title: this.chosenElements.input.value,
 					completed: false,
 				});
-
 				await this.taskManager.addTask(task);
 				this.taskRender.renderList();
 				this.chosenElements.input.value = '';

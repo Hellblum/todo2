@@ -1,8 +1,16 @@
 class ApiManager {
 	constructor() {}
 	async getAllTasks() {
-		const res = await fetch('https://jsonplaceholder.typicode.com/user/1/todos');
-		return await res.json();
+		try{
+			const res = await fetch('https://jsonplaceholder.typicode.com/user/1/todos');
+			if (!res.ok) {
+				throw new Error("responce not ok, getAllTasks")
+			}
+			return await res.json()
+		} catch (error) {
+			console.error(error.message)
+		}
+		
 	};
 	async addNewTask(task) {
 		const res = await fetch('https://jsonplaceholder.typicode.com/user/1/todos', {
@@ -12,7 +20,9 @@ class ApiManager {
 				'Content-type': 'application/json',
 			},
 		});
-		return await res.json();
+		const data = await res.json();
+		data.id = Math.random();
+		return data;
 	}
 	async deleteNewTask(id) {
 		const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
