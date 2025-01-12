@@ -23,7 +23,7 @@ class TaskManager {
 	async addTask(task) {
 		try {
 			const newTask = await this.apiManager.addNewTask(task);
-			this.tasks.unshift(newTask);
+			this.tasks.push(newTask);
 			this.logTasks();
 		} catch (error) {
 			console.error("Помилка додавання тудухи:", error);
@@ -39,11 +39,11 @@ class TaskManager {
 		}
 	}
 	async toggleTaskCompletion(id) {
-		try{
+		try {
 			const task = this.tasks.find(task => task.id === id);
-			if(task) {
-				const updateTask = await this.apiManager.patchNewTask(id, task.completed);
-				task.completed = !updateTask.completed;
+			if (task) {
+				const updatedTask = await this.apiManager.patchNewTask(id, !task.completed);
+				task.completed = updatedTask.completed;
 			}
 			this.logTasks();
 		} catch (error) {

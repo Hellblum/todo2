@@ -2,7 +2,7 @@ class ApiManager {
 	constructor() {}
 	async getAllTasks() {
 		try{
-			const res = await fetch('https://jsonplaceholder.typicode.com/user/1/todos');
+			const res = await fetch('http://localhost:3000/todos');
 			if (!res.ok) {
 				throw new Error("responce not ok, getAllTasks")
 			}
@@ -13,31 +13,42 @@ class ApiManager {
 		
 	};
 	async addNewTask(task) {
-		const res = await fetch('https://jsonplaceholder.typicode.com/user/1/todos', {
+		const res = await fetch('http://localhost:3000/todos', {
 			method: 'POST',
 			body: JSON.stringify(task),
 			headers: {
 				'Content-type': 'application/json',
 			},
 		});
-		const data = await res.json();
-		data.id = Math.random();
-		return data;
+		return await res.json();
 	}
 	async deleteNewTask(id) {
-		const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+		try {
+			if (!id) {
+            throw new Error("ID is required to delete a task");
+			}
+			const res = await fetch(`http://localhost:3000/todos/${id}`, {
 			method: 'DELETE',
-		});
-		return await res.json();
+			});
+			return await res.json();
+		} catch (err) {
+			console.log({message: err})
+		}
 	}
 	async patchNewTask(id, updateCompleted) {
-		const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+		const res = await fetch(`http://localhost:3000/todos/${id}`, {
 			method: 'PATCH',
-			body: JSON.stringify({completed: updateCompleted}),
+			body: JSON.stringify({ completed: updateCompleted }),
 			headers: {
-				'Content-type': 'application/json',
+				'Content-Type': 'application/json',
 			},
 		});
-		return await res.json();
+	
+		if (res.ok) {
+			return await res.json();
+		} else {
+			const error = await res.json();
+			console.error("Error updating task:", error.message);
+		}
 	}
-};
+}
