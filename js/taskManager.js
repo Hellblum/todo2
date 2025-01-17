@@ -8,10 +8,11 @@ class TaskManager {
 		try {
 		const tasks = await this.apiManager.getAllTasks();
 		this.tasks = tasks.map(task => {
-		const { id: taskId, title: taskTitle, completed } = task;
+		const { id: taskId, title: taskTitle, description: descriptionTask, completed } = task;
 		return {
 			id: taskId,
 			title: taskTitle,
+			description: descriptionTask,
 			completed,
 			}
 		});

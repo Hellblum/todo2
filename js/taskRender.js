@@ -2,6 +2,7 @@ class TaskRender {
 	constructor (taskManager) {
 		this.chosenElements = new ChosenElements();
 		this.taskManager = taskManager;
+		this.closeModal();
 	};
 	renderList() {
 		this.chosenElements.taskList.innerHTML = '';
@@ -21,7 +22,10 @@ class TaskRender {
 				liText.style.textDecoration = 'line-through';
 				liText.style.textDecorationColor = 'red';
 			};
-
+			liText.addEventListener('click', () => {
+				this.showModal(task.description)
+			});
+			
 			checkbox.addEventListener('change', () => {
 				this.taskManager.toggleTaskCompletion(task.id);
 				if (checkbox.checked) {
@@ -44,6 +48,20 @@ class TaskRender {
 			this.chosenElements.taskList.appendChild(li);
 		});
 	};
+	showModal(description) {
+		this.chosenElements.modalText.innerHTML = description;
+		this.chosenElements.modalDescription.style.display = 'block';
+	}
+	closeModal() {
+		this.chosenElements.modalClose.addEventListener('click', () => {
+			this.chosenElements.modalDescription.style.display = 'none';
+		});
+		this.chosenElements.modalDescription.addEventListener('click', () => {
+			if (event.target !== this.chosenElements.modalWindow) {
+				this.chosenElements.modalDescription.style.display = 'none';
+			}
+		})
+	}
 	handleFilter(filter) {
 		this.taskManager.setFilter(filter);
 		this.renderList();

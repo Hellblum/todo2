@@ -1,3 +1,4 @@
+/* Загальні стилі */
 * {
 	margin: 0;
 	padding: 0;
@@ -8,13 +9,14 @@ body, html {
 	width: 100%;
 	height: 100%;
 	overflow-y: scroll;
-	text-align: center;
-	background-color: #f0f0f0; 
-	background-size: cover;
-	background-position: center;
+	font-family: serif;
 }
 
 .wrapper {
+	width: 100%;
+	height: 100%;
+	background-color: #f0f0f0; 
+	text-align: center;
 	padding-bottom: 2%;
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(5px);
@@ -52,13 +54,15 @@ body, html {
 
 .container-input {
 	display: flex;
+	row-gap: 1svh;
+	flex-direction: column;
 	justify-content: center;
-	margin-top: 5%;
+	align-items: center;
+	margin-top: 2%;
 }
 
 .input {
 	width: 60svh;
-	margin-right: 1svh;
 	color: #333;
 	padding: 0.7em 1.7em;
 	font-size: 18px;
@@ -68,9 +72,26 @@ body, html {
 	transition: all 0.3s;
 	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
+.input-description {
+	width: 60svh;
+	height: 15svh;
+	color: #333;
+	padding: 0.7em 1.7em;
+	font-size: 18px;
+	border-radius: 0.1em;
+	background: #e0e0e0;
+	border: 1px solid #ccc;
+	transition: all 0.3s;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+	resize: none;
+}
+.input-description::placeholder {
+	font-family: Arial, Helvetica, sans-serif;
+	
+}
 
 .input-btn {
-	width: 10svh;
+	width: 25vh;
 }
 
 .container-list {
@@ -85,6 +106,7 @@ body, html {
 	display: flex;
 	flex-direction: column;
 	list-style: none;
+	
 }
 
 .list-li {
@@ -92,6 +114,10 @@ body, html {
 	display: flex;
 	text-align: center;
 	justify-content: space-between;
+	transition: all 0.3s;
+}
+.list-li:hover{
+	background: linear-gradient(90deg, #F1F1F1,#E2E2E2);
 }
 
 .li-checkbox {
@@ -128,6 +154,7 @@ body, html {
 	font-size: 25px;
 	color: #333;
 	text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
 }
 
 .li-remove-btn {
@@ -136,7 +163,7 @@ body, html {
 	height: 30px;
 	font-size: 14px;
 	background: #e0e0e0;
-	color: #333;	
+	color: #333;    
 	transition: all 0.4s;
 }
 .li-remove-btn:hover{
@@ -154,4 +181,61 @@ body, html {
 .tab-current-btn,
 .tab-completed-btn {
 	transition: all 0.4s;
+}
+
+/* Стилі модального вікна */
+.container-description {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-description {
+	display: flex;
+	margin-top: 30svh;
+	justify-content: center;
+	align-items: center;
+}
+.modal-window {
+	width: 50vh;
+	height: auto;
+	top: 150%;
+	right: 100%;
+	padding: 20px;
+	font-size: 18px;
+	border-radius: 0.1em;
+	background: #e0e0e0;
+	border: 1px solid #ccc;
+	transition: all 0.3s;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.modal-text {
+	font-size: 25px;
+	text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close-btn {
+	width: 60px;
+	height: 30px;
+	margin-top: 20px;
+	font-size: 14px;
+	background: #e0e0e0;
+	color: #333;
+	border: none;
+	transition: all 0.4s;
+	cursor: pointer;
+	border-radius: 0.3em;
+}
+
+.modal-close-btn:hover {
+	background-color: #d1d1d1;
 }
