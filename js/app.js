@@ -7,24 +7,42 @@ class App {
 		this.eventFilters = new EventFilters(this.chosenElements, this.taskRender);
 	}
 	async init () {
+		this.chosenElements.input.focus();
 		await this.taskManager.tasksLoader();
 		this.taskRender.renderList();
 
 		this.chosenElements.inputBtn.addEventListener('click', async () => {
-			if (this.chosenElements.input.value.trim() !== "" && this.chosenElements.description.value.trim() !== "") {
+			if (this.chosenElements.input.value.trim() !== "") {
 				const task = ({
 					title: this.chosenElements.input.value,
-					description: this.chosenElements.description.value,
+					description: "",
 					completed: false,
 				});
 				await this.taskManager.addTask(task);
 				this.taskRender.renderList();
 				this.chosenElements.input.value = '';
-				this.chosenElements.description.value = '';
 			} else{
 				alert ('Please enter a task!')
-			}
+			};
 		})
+
+		document.addEventListener('keydown', async (e) => {
+			if(e.key === 'Enter') {
+				if (this.chosenElements.input.value.trim() !== "") {
+					const task = ({
+						title: this.chosenElements.input.value,
+						description: "",
+						completed: false,
+					});
+					await this.taskManager.addTask(task);
+					this.taskRender.renderList();
+					this.chosenElements.input.value = '';
+				} else{
+					alert ('Please enter a task!')
+				}
+			};
+		})
+		
 		this.eventFilters.filterTab();
 	}
 };

@@ -85,10 +85,6 @@ body, html {
 	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 	resize: none;
 }
-.input-description::placeholder {
-	font-family: Arial, Helvetica, sans-serif;
-	
-}
 
 .input-btn {
 	width: 25vh;
@@ -98,6 +94,7 @@ body, html {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	
 }
 
 .list {
@@ -184,9 +181,9 @@ body, html {
 }
 
 /* Стилі модального вікна */
-.container-description {
+.container-task-details {
 	display: none;
-	position: fixed;
+	position: absolute;
 	z-index: 1000;
 	left: 0;
 	top: 0;
@@ -194,14 +191,15 @@ body, html {
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
 }
-.modal-description {
+.task-details-modal {
 	display: flex;
-	margin-top: 30svh;
 	justify-content: center;
 	align-items: center;
+	height: 100%;
 }
-.modal-window {
-	width: 50vh;
+.details-content {
+	width: 60vh;
+	gap: 1svh;
 	height: auto;
 	top: 150%;
 	right: 100%;
@@ -210,20 +208,75 @@ body, html {
 	border-radius: 0.1em;
 	background: #e0e0e0;
 	border: 1px solid #ccc;
+	border-radius: 1svh;
 	transition: all 0.3s;
 	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
 }
-
-.modal-text {
+.details-description,
+.details-title {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: flex-start;
+}
+.details-item-subtitle{
+	color: #6d6d6d;
+}
+.details-item{
+	display: block;
+	color: #6d6d6d;
+}
+.details-item-unsave {
+	display: none;
+	color:rgb(179, 112, 112);
+}
+.details-item-title,
+.details-item-description {
+	width: 100%;
+	text-align: left;
+	font-family: inherit;
 	font-size: 25px;
 	text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+}
+.details-item-title {
+	overflow: hidden;
+	background: transparent;
+	border: none;
+	resize: none;
+	outline: none;
+	box-shadow: none;
 }
 
-.modal-close-btn {
+.details-item-title:focus {
+	background: #e0e0e0;
+	border: 1px solid #ccc;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+.details-item-description{
+	height: 20svh;
+	background: #c2c2c2;
+	border: none;
+	resize: none;
+	outline: none;
+	box-shadow: none;
+}
+.details-item-description:focus {
+	background: #ffffff;
+	border: 1px solid #ccc;
+}
+.details-item-description::placeholder{
+	font-size: 20px;
+}
+.details-content-buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+.details-close-btn {
 	width: 60px;
 	height: 30px;
 	margin-top: 20px;
@@ -235,7 +288,29 @@ body, html {
 	cursor: pointer;
 	border-radius: 0.3em;
 }
-
-.modal-close-btn:hover {
+.details-close-btn:hover{
 	background-color: #d1d1d1;
+}
+
+.description-save-btn,
+.description-cancel-btn{
+	opacity: 0;
+	visibility: hidden;
+	width: 60px;
+	height: 30px;
+	margin-top: 20px;
+	margin-right: 10px;
+	font-size: 14px;
+	background: #e0e0e0;
+	color: #333;
+	border: none;
+	transition: all 0.4s;
+	cursor: pointer;
+	border-radius: 0.3em;
+}
+.description-save-btn{
+	background: #4a90e2;
+}
+.description-save-btn:hover{
+	background: #4a90e2;
 }

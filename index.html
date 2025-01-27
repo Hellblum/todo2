@@ -11,7 +11,6 @@
 		<h1 class="title">TODO 2.0</h1>
 		<div class="container-input">
 			<input type="text" class="input" placeholder="Add titile">
-			<textarea class="input-description" placeholder="Add description"></textarea>	
 			<button class="input-btn">+</button>
 		</div>
 		<div class="container-tabs">
@@ -21,25 +20,38 @@
 				<button class="tab-completed-btn">Completed</button>
 			</div>
 		</div>
-		<div class="container-description">
-			<div class="modal-description">
-				<div class="modal-window">
-					<p class="modal-text"></p>
-					<button class="modal-close-btn">Close</button>
+		<div class="container-task-details">
+			<div class="task-details-modal">
+				<div class="details-content">
+					<div class="details-title">
+						<h4 class="details-item-subtitle">Title</h4>
+						<textarea rows="1" class="details-item-title" oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"></textarea>
+					</div>
+					<div class="details-description">
+						<h4 class="details-item">Description</h4>
+						<h4 class="details-item-unsave">Description have unsaved changes</h4>
+						<textarea class="details-item-description" placeholder="Add a more detailed description..."></textarea>
+					</div>
+					<div class="details-content-buttons">
+						<div class="details-description-buttons">
+							<button class="description-save-btn">Save</button>
+							<button class="description-cancel-btn">Cancel</button>
+						</div>
+						<button class="details-close-btn">Close</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="container-list">
 			<ul class="list"></ul>
 		</div>
-		<script src="js/task.js"></script>
 		<script src="js/chosenElements.js"></script>
 		<script src="js/apiManager.js"></script>
 		<script src="js/tabEventFilters.js"></script>
 		<script src="js/taskManager.js"></script>
+		<script src="js/detailsWindow.js"></script>
 		<script src="js/taskRender.js"></script>
 		<script src="js/app.js"></script>
-		</script>
 	</div>
 </body>
 </html>

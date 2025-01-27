@@ -8,11 +8,11 @@ class TaskManager {
 		try {
 		const tasks = await this.apiManager.getAllTasks();
 		this.tasks = tasks.map(task => {
-		const { id: taskId, title: taskTitle, description: descriptionTask, completed } = task;
+		const { id: taskId, title: taskTitle, description: taskDescription, completed } = task;
 		return {
 			id: taskId,
 			title: taskTitle,
-			description: descriptionTask,
+			description: taskDescription,
 			completed,
 			}
 		});
@@ -39,16 +39,36 @@ class TaskManager {
 			console.error("Помилка видалення тудухи:", error);
 		}
 	}
-	async toggleTaskCompletion(id) {
+	// async toggleTaskCompletion(id) {
+	// 	try {
+	// 		const task = this.tasks.find(task => task.id === id);
+	// 		if (task) {
+	// 			const updatedTask = await this.apiManager.patchNewTask(id, !task.completed);
+	// 			task.completed = updatedTask.completed;
+	// 		}
+	// 		this.logTasks();
+	// 	} catch (error) {
+	// 		console.error("Помилка перемикача тудухи:", error);
+	// 	}
+	// }
+	async updateTask(id, title, description, completed) {
 		try {
 			const task = this.tasks.find(task => task.id === id);
-			if (task) {
-				const updatedTask = await this.apiManager.patchNewTask(id, !task.completed);
-				task.completed = updatedTask.completed;
+			if(task) {
+				const updatedTask = await this.apiManager.patchNewTask(id, { title, description, completed });
+				if(updatedTask) {
+					task.title = updatedTask.title;
+					task.description = updatedTask.description;
+					task.completed = updatedTask.completed;
+				} else {
+               console.log(`Не вдалося оновити задачу з ID ${id}.`);
+				}
+			} else {
+            console.log(`Задачу з ID ${id} не знайдено.`);
 			}
 			this.logTasks();
 		} catch (error) {
-			console.error("Помилка перемикача тудухи:", error);
+			console.error("Помилка оновлення тудухи:", error);
 		}
 	}
 	setFilter(filter) {

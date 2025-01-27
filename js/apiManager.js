@@ -35,10 +35,10 @@ class ApiManager {
 			console.log({message: err})
 		}
 	}
-	async patchNewTask(id, updateCompleted) {
+	async patchNewTask(id, updates) {
 		const res = await fetch(`http://localhost:3000/todos/${id}`, {
 			method: 'PATCH',
-			body: JSON.stringify({ completed: updateCompleted }),
+			body: JSON.stringify(updates),
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -47,8 +47,8 @@ class ApiManager {
 		if (res.ok) {
 			return await res.json();
 		} else {
-			const error = await res.json();
-			console.error("Error updating task:", error.message);
+			const err = await res.json();
+			console.error("Error updating task:", err.message);
 		}
 	}
 }

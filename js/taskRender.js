@@ -2,12 +2,12 @@ class TaskRender {
 	constructor (taskManager) {
 		this.chosenElements = new ChosenElements();
 		this.taskManager = taskManager;
-		this.closeModal();
+		this.detailsWindow = new DetailsWindow(this.chosenElements, this.taskManager, () => this.renderList());
 	};
 	renderList() {
 		this.chosenElements.taskList.innerHTML = '';
 		const filtredTasks = this.taskManager.getFilteredTasks();
-		filtredTasks.map((task, index) => {
+		filtredTasks.forEach((task, index) => {
 			const li = document.createElement('li');
 			li.classList.add('list-li');
 			li.innerHTML = `<span class='li-text'>${index+1}. ${task.title}</span>`;
@@ -23,12 +23,14 @@ class TaskRender {
 				liText.style.textDecorationColor = 'red';
 			};
 			liText.addEventListener('click', () => {
-				this.showModal(task.description)
+				this.detailsWindow.showModal(task);
 			});
 			
-			checkbox.addEventListener('change', () => {
-				this.taskManager.toggleTaskCompletion(task.id);
-				if (checkbox.checked) {
+			checkbox.addEventListener('change', async () => {
+				const newCompleted = checkbox.checked;
+				await this.taskManager.updateTask(task.id, task.title, task.description, newCompleted);
+				task.completed = newCompleted;
+				if (newCompleted) {
 					liText.style.textDecoration = 'line-through';
 					liText.style.textDecorationColor = 'red';
 				} else {
@@ -48,20 +50,8 @@ class TaskRender {
 			this.chosenElements.taskList.appendChild(li);
 		});
 	};
-	showModal(description) {
-		this.chosenElements.modalText.innerHTML = description;
-		this.chosenElements.modalDescription.style.display = 'block';
-	}
-	closeModal() {
-		this.chosenElements.modalClose.addEventListener('click', () => {
-			this.chosenElements.modalDescription.style.display = 'none';
-		});
-		this.chosenElements.modalDescription.addEventListener('click', () => {
-			if (event.target !== this.chosenElements.modalWindow) {
-				this.chosenElements.modalDescription.style.display = 'none';
-			}
-		})
-	}
+	
+	
 	handleFilter(filter) {
 		this.taskManager.setFilter(filter);
 		this.renderList();
