@@ -28,11 +28,16 @@ class DetailsWindow {
 	}
 
 	editDescription(task) {
-		this.originalDescription = task.description;
+		if(task.originalTask === undefined) {
+			task.originalTask = task.description
+		}
+
 		this.chosenElements.itemDescription.value = task.description;
+
 		if (task.isDescChanges === undefined) {
 			task.isDescChanges = false;
 		}
+
 
 		this.focusBtns =  () => {
 			this.chosenElements.saveDescriptionBtn.style.opacity = '1';
@@ -51,9 +56,9 @@ class DetailsWindow {
 		this.chosenElements.itemDescription.onfocus =  this.focusBtns;
 		this.chosenElements.itemDescription.onblur = this.blurBtns;
 
-		this.chosenElements.itemDescription.oninput = () => {
-			const tempDescription = this.chosenElements.itemDescription.value.trim();		
-			task.isDescChanges = tempDescription !== this.originalDescription;
+		this.chosenElements.itemDescription.onchange = () => {
+			const tempDescription = this.chosenElements.itemDescription.value;		
+			task.isDescChanges = tempDescription !== task.originalTask;
 			task.description = tempDescription;
 			this.unsavedChanges(task);
 		};
@@ -62,13 +67,14 @@ class DetailsWindow {
 			const newDescription = this.chosenElements.itemDescription.value.trim();
 			await this.taskManager.updateTask(task.id, task.title, newDescription, task.completed);
 			task.description = newDescription;
-			this.originalDescription = newDescription;
+			task.originalTask = newDescription;
 			task.isDescChanges = false;
 			this.unsavedChanges(task);
 		}
 
 		this.chosenElements.cancelDescriptionBtn.onclick = () => {
-			this.chosenElements.itemDescription.value = this.originalDescription;
+			this.chosenElements.itemDescription.value = task.originalTask;
+			task.description = task.originalTask;
 			task.isDescChanges = false;
 			this.unsavedChanges(task);
 		}
