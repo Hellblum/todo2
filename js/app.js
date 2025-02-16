@@ -7,6 +7,12 @@ class App {
 		this.eventFilters = new EventFilters(this.chosenElements, this.taskRender);
 	}
 	async init () {
+		const isAuthenticated = await this.verifyToken();
+			if (!isAuthenticated) {
+				window.location.href = "auth.html";
+				
+				return;
+			}
 		this.chosenElements.input.focus();
 		await this.taskManager.tasksLoader();
 		this.taskRender.renderList();
@@ -44,6 +50,20 @@ class App {
 		})
 		
 		this.eventFilters.filterTab();
+	}
+
+	async verifyToken() {
+		try {
+			const res = await fetch('http://localhost:3000/auth/check-token', {
+				method: 'GET',
+				credentials: 'include',
+			});
+			if (!res.ok) throw new Error(`Invalid token: ${res.status} ${res.statusText}`);
+			return true;
+		} catch (err) {
+			console.log('Token verification failed:', err.message);
+			return false;
+		}
 	}
 };
 const app = new App();

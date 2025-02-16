@@ -1,0 +1,53 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.wrapper {
+	font-family: sans-serif;
+	background-color: #f0f0f0; 
+	text-align: center;
+	padding-bottom: 2%;
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(5px);
+}
+.container {
+	width: 100%;
+	height: 100%;
+}
+.log-container {
+	width: ;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20svh;
+	gap: 1svh;
+}
+.log-title {}
+.log-username-box {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5svh;
+}
+.log-username-title {}
+.log-username-input {}
+.log-password-box {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5svh;
+}
+.log-password-title {}
+.log-password-input {}
+.log-btn {}
+.reg-container {
+	display: none;
+}
+.reg-title {}
+.reg-username-box {}
+.reg-username-title {}
+.reg-username-input {}
+.reg-password-box {}
+.reg-password-title {}
+.reg-password-input {}
+.reg-btn {}
