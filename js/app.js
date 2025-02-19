@@ -6,13 +6,8 @@ class App {
 		this.taskRender = new TaskRender(this.taskManager, this.taskList);
 		this.eventFilters = new EventFilters(this.chosenElements, this.taskRender);
 	}
+
 	async init () {
-		const isAuthenticated = await this.verifyToken();
-			if (!isAuthenticated) {
-				window.location.href = "auth.html";
-				
-				return;
-			}
 		this.chosenElements.input.focus();
 		await this.taskManager.tasksLoader();
 		this.taskRender.renderList();
@@ -24,11 +19,12 @@ class App {
 					description: "",
 					completed: false,
 				});
+				// Використовуємо apiRequest для додавання задачі
 				await this.taskManager.addTask(task);
 				this.taskRender.renderList();
 				this.chosenElements.input.value = '';
 			} else{
-				alert ('Please enter a task!')
+				alert ('Please enter a task!');
 			};
 		})
 
@@ -40,30 +36,17 @@ class App {
 						description: "",
 						completed: false,
 					});
+					// Використовуємо apiRequest для додавання задачі
 					await this.taskManager.addTask(task);
 					this.taskRender.renderList();
 					this.chosenElements.input.value = '';
 				} else{
-					alert ('Please enter a task!')
+					alert ('Please enter a task!');
 				}
 			};
 		})
-		
-		this.eventFilters.filterTab();
-	}
 
-	async verifyToken() {
-		try {
-			const res = await fetch('http://localhost:3000/auth/check-token', {
-				method: 'GET',
-				credentials: 'include',
-			});
-			if (!res.ok) throw new Error(`Invalid token: ${res.status} ${res.statusText}`);
-			return true;
-		} catch (err) {
-			console.log('Token verification failed:', err.message);
-			return false;
-		}
+		this.eventFilters.filterTab();
 	}
 };
 const app = new App();
