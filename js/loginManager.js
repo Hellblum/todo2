@@ -1,7 +1,7 @@
 class LoginManager {
 	constructor() {
-			this.logNameInput = document.querySelector('.log-username-input');
-			this.logPassInput = document.querySelector('.log-password-input');
+			this.usernameInput = document.querySelector('.username-input');
+			this.passwordInput = document.querySelector('.password-input');
 			this.logBtn = document.querySelector('.log-btn');
 			this.startEvent();
 	}
@@ -17,8 +17,8 @@ class LoginManager {
 	}
 
 	async handleLogin() {
-			const username = this.logNameInput.value.trim();
-			const password = this.logPassInput.value.trim();
+			const username = this.usernameInput.value.trim();
+			const password = this.passwordInput.value.trim();
 			try {
 				const res = await fetch('http://localhost:3000/auth/login', {
 					method: 'POST',
