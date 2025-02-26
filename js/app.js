@@ -19,7 +19,6 @@ class App {
 					description: "",
 					completed: false,
 				});
-				// Використовуємо apiRequest для додавання задачі
 				await this.taskManager.addTask(task);
 				this.taskRender.renderList();
 				this.chosenElements.input.value = '';

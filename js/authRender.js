@@ -1,9 +1,33 @@
 class AuthRender{
 	constructor() {
-		this.renderAuthForm();
+		this.authContainer = document.querySelector('.auth-container')
+		this.errContainer = document.querySelector('.err-container')
+		this.renderAuthForm()
+		this.usernameInput.focus();
+		this.validationAuthForm()
+	}
+	validationAuthForm(){
+		this.authContainer.addEventListener('submit',(e) =>{
+			e.preventDefault();
+			this.errContainer.innerHTML = '';
+			let messages = []
+			if(!this.usernameInput.value.trim()) {
+				messages.push('Name is required')
+			}
+			if(this.passwordInput.value.length < 4) {
+				messages.push('Password must be longer than 4 characters')
+			}
+			if(this.passwordInput.value.length > 20) {
+				messages.push('Password must be less than 20 characters')
+			}
+			if(messages.length > 0) {
+				this.errContainer.innerHTML = messages.join(', <br>');
+				return;
+			}
+		})
 	}
 	renderAuthForm(){
-		const authContainer = document.querySelector('.auth-container')
+		this.authContainer.innerHTML = '';
 
 		const formTitle = document.createElement('h2');
 		formTitle.classList.add('auth-title');
@@ -16,10 +40,10 @@ class AuthRender{
 		usernameLabel.classList.add('username-label');
 		usernameLabel.textContent = 'Username';
 
-		const usernameInput = document.createElement('input');
-		usernameInput.classList.add('username-input');
-		usernameInput.type = 'text';
-		usernameInput.placeholder = 'Please enter username';
+		this.usernameInput = document.createElement('input');
+		this.usernameInput.classList.add('username-input');
+		this.usernameInput.type = 'text';
+		this.usernameInput.placeholder = 'Please enter username';
 
 		const passwordField = document.createElement('div');
 		passwordField.classList.add('password-field');
@@ -28,23 +52,26 @@ class AuthRender{
 		passwordLabel.classList.add('password-label');
 		passwordLabel.textContent = 'Password';
 
-		const passwordInput = document.createElement('input');
-		passwordInput.classList.add('password-input');
-		passwordInput.type = 'password';
-		passwordInput.placeholder = 'Please enter password';
+		this.passwordInput = document.createElement('input')
+		this.passwordInput.classList.add('password-input');
+		this.passwordInput.type = 'password';
+		this.passwordInput.placeholder = 'Please enter password';
 
 		const logBtn = document.createElement('button');
 		logBtn.classList.add('log-btn');
 		logBtn.textContent = 'Sign In';
+		logBtn.type = 'submit';
 
 		const regBtn = document.createElement('button');
 		regBtn.classList.add('reg-btn');
 		regBtn.textContent = 'Sign Up';
 		regBtn.style.display = 'none';
+		regBtn.type = 'submit';
 
 		const toggleBtn = document.createElement('button');
 		toggleBtn.classList.add('toggle-btn');
 		toggleBtn.textContent = 'Need an account? Register';
+		toggleBtn.type = 'button';
 
 		toggleBtn.addEventListener('click', () => {
 			const isLogin = formTitle.textContent === 'Sign In';
@@ -54,9 +81,9 @@ class AuthRender{
 			toggleBtn.textContent = isLogin ? 'Have an account? Login' : 'Need an account? Register';
 		})
 
-		usernameField.append(usernameLabel, usernameInput);
-		passwordField.append(passwordLabel, passwordInput);
-		authContainer.append(formTitle, usernameField, passwordField, logBtn, regBtn, toggleBtn);
+		usernameField.append(usernameLabel, this.usernameInput);
+		passwordField.append(passwordLabel, this.passwordInput);
+		this.authContainer.append(formTitle, usernameField, passwordField, logBtn, regBtn, this.errContainer, toggleBtn);
 	}
 }
 new AuthRender()
