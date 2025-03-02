@@ -3,11 +3,11 @@ class AuthRender{
 		this.authContainer = document.querySelector('.auth-container')
 		this.errContainer = document.querySelector('.err-container')
 		this.renderAuthForm()
-		this.usernameInput.focus();
+		this.usernameInput.focus()
 		this.validationAuthForm()
 	}
 	validationAuthForm(){
-		this.authContainer.addEventListener('submit',(e) =>{
+		this.authContainer.addEventListener('submit', async (e) =>{
 			e.preventDefault();
 			this.errContainer.innerHTML = '';
 			let messages = []
@@ -24,14 +24,32 @@ class AuthRender{
 				this.errContainer.innerHTML = messages.join(', <br>');
 				return;
 			}
+			const username = this.usernameInput.value.trim();
+			const password = this.passwordInput.value;
+			const toggle = this.formTitle.textContent === 'Sign In';
+			const url = toggle ? 'http://localhost:3000/auth/login' : 'http://localhost:3000/auth/registration';
+			try{
+				const res = await fetch(url, {
+					method: 'POST',
+					body: JSON.stringify({ username, password }),
+					headers: { 'Content-Type': 'application/json' },
+				});
+				const data = await res.json();
+				if (!data.ok) {
+					this.errContainer.innerHTML = `${data.message}`
+				}
+			} catch (e) {
+				console.error('Error:', e.message);
+				this.errContainer.innerHTML = 'Server error. Try again later.';
+			}
 		})
 	}
 	renderAuthForm(){
 		this.authContainer.innerHTML = '';
 
-		const formTitle = document.createElement('h2');
-		formTitle.classList.add('auth-title');
-		formTitle.textContent = 'Sign In';
+		this.formTitle = document.createElement('h2');
+		this.formTitle.classList.add('auth-title');
+		this.formTitle.textContent = 'Sign In';
 
 		const usernameField = document.createElement('div');
 		usernameField.classList.add('username-field');
@@ -74,8 +92,8 @@ class AuthRender{
 		toggleBtn.type = 'button';
 
 		toggleBtn.addEventListener('click', () => {
-			const isLogin = formTitle.textContent === 'Sign In';
-			formTitle.textContent = isLogin ? 'Sign Up' : 'Sign In';
+			const isLogin = this.formTitle.textContent === 'Sign In';
+			this.formTitle.textContent = isLogin ? 'Sign Up' : 'Sign In';
 			logBtn.style.display = isLogin ? 'none' : 'block';
 			regBtn.style.display = isLogin ? 'block' : 'none';
 			toggleBtn.textContent = isLogin ? 'Have an account? Login' : 'Need an account? Register';
@@ -83,7 +101,7 @@ class AuthRender{
 
 		usernameField.append(usernameLabel, this.usernameInput);
 		passwordField.append(passwordLabel, this.passwordInput);
-		this.authContainer.append(formTitle, usernameField, passwordField, logBtn, regBtn, this.errContainer, toggleBtn);
+		this.authContainer.append(this.formTitle, usernameField, passwordField, logBtn, regBtn, this.errContainer, toggleBtn);
 	}
 }
 new AuthRender()
